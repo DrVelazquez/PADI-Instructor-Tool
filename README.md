@@ -1,2 +1,5 @@
 # PADI-Instructor-Tool
-Instructor tool 
+
+Access the tool here:
+
+https://drvelazquez.github.io/PADI-Instructor-Tool/
