@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PADI Master Guide</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            animation: {
+              'in': 'fadeIn 0.3s ease-out',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              }
+            }
+          }
+        },
+        safelist: [
+          'bg-teal-600', 'bg-teal-500', 'text-teal-700', 'bg-teal-50', 'text-teal-600',
+          'bg-blue-600', 'text-blue-600', 'bg-blue-100', 'text-blue-700', 'bg-blue-50', 'text-blue-500',
+          'bg-red-600', 'text-red-600', 'bg-red-100', 'text-red-700', 'bg-red-50', 'text-red-500',
+          'bg-slate-600', 'text-slate-600', 'bg-slate-100', 'text-slate-700', 'bg-slate-50', 'text-slate-500',
+          'bg-black', 'text-black',
+          'bg-purple-600', 'text-purple-600', 'bg-purple-100', 'text-purple-700', 'bg-purple-50', 'text-purple-500',
+        ]
+      }
+    </script>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      body { -webkit-font-smoothing: antialiased; }
+      /* Hide scrollbar for clean horizontal scrolling */
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/"
+  }
+}
+</script>
+</head>
+<body class="bg-slate-50 text-slate-900">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // --- ICONS COMPONENTS ---
+        const IconTank = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M7 2h10v20H7z" /><path d="M7 6h10" /><path d="M12 2v-2" />
+            </svg>
+        );
+        const IconDepth = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M12 3v18" /><path d="m8 17 4 4 4-4" /><path d="M2 12h20" />
+            </svg>
+        );
+        const IconCheck = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <polyline points="20 6 9 17 4 12" />
+            </svg>
+        );
+        const IconArrowLeft = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="m12 19-7-7 7-7" /><path d="M19 12H5" />
+            </svg>
+        );
+        const IconInfo = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" />
+            </svg>
+        );
+        const IconScuba = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M2 12h20" /><path d="M7 12a5 5 0 0 1 5-5 5 5 0 0 1 5 5" /><path d="M12 7V3" />
+            </svg>
+        );
+        const IconCompass = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <circle cx="12" cy="12" r="10" /><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+            </svg>
+        );
+        const IconLifebuoy = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" /><line x1="4.93" y1="4.93" x2="9.17" y2="9.17" /><line x1="14.83" y1="14.83" x2="19.07" y2="19.07" /><line x1="14.83" y1="9.17" x2="19.07" y2="4.93" /><line x1="14.83" y1="9.17" x2="18.36" y2="5.64" /><line x1="4.93" y1="19.07" x2="9.17" y2="14.83" />
+            </svg>
+        );
+        const IconBadge = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.78 4 4 0 0 1 0-6.74Z" />
+            </svg>
+        );
+        const IconMask = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M2 12h20" /><path d="M12 2v20" /><circle cx="12" cy="12" r="8" />
+            </svg>
+        );
+        const IconRefresh = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" />
+            </svg>
+        );
+        const IconStar = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+        );
+        const IconSmile = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <circle cx="12" cy="12" r="10" /><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" />
+            </svg>
+        );
+        const IconSeal = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /><path d="M12 2v20" />
+            </svg>
+        );
+        const IconFins = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M19 12c.5-2-1-3.5-3-3.5-.5 0-1 .1-1.5.2C13 5.5 11 4 8 4 4.5 4 2 6 2 6s2.5 1 2.5 3S2 12 2 12s2.5 1 2.5 3S2 18 2 18s2.5 2 6 2c3 0 5-1.5 6.5-4.7.5.1 1 .2 1.5.2 2 0 3.5-1.5 3-3.5" />
+            </svg>
+        );
+        const IconBook = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
+        );
+
+        // --- DATA ---
+        const COURSES = [
+          // --- EXPERIENCE PROGRAMS ---
+          {
+            id: 'bubblemaker',
+            category: 'program',
+            title: 'Bubblemaker',
+            shortTitle: 'Bubble',
+            color: 'teal',
+            icon: 'smile',
+            minAge: 8,
+            maxDepth: '2m / 6ft',
+            ratios: {
+              confined: '6:1 (4:1 AI)',
+              open: 'N/A',
+              details: 'Pool/Confined only. Instructor: 6:1. Assistant Instructor: 4:1. You can add 2 participants per certified assistant.'
+            },
+            prereqs: ['None', 'Parental approval'],
+            requiredEquipment: ['mask_fins_snorkel', 'bcd', 'regulator', 'tank', 'weights', 'computer'],
+            modules: [
+              {
+                id: 'bubble_cw',
+                title: 'Confined Water',
+                type: 'confined',
+                skills: [
+                  { id: 'bb_1', name: 'Briefing: equipment, clearing, breathing rules' },
+                  { id: 'bb_2', name: 'Practice breathing in shallow water' },
+                  { id: 'bb_3', name: 'Clear regulator & mask' },
+                  { id: 'bb_4', name: 'Equalization techniques' },
+                  { id: 'bb_5', name: 'Inflate/Deflate BCD at surface' },
+                  { id: 'bb_6', name: 'Underwater tour (max 2m)' },
+                ]
+              }
+            ]
+          },
+          {
+            id: 'seal_team',
+            category: 'program',
+            title: 'PADI Seal Team',
+            shortTitle: 'Seal',
+            color: 'teal',
+            icon: 'seal',
+            minAge: 8,
+            maxDepth: '2m (AM 1) | 4m (AM 2-5)',
+            ratios: {
+              confined: '6:1 (4:1 AI)',
+              open: 'N/A',
+              details: 'Pool only. Ratio 6:1 (Instructor), 4:1 (Assistant Instructor). Max 2m depth for AquaMission 1, then 4m.'
+            },
+            prereqs: ['None'],
+            requiredEquipment: ['mask_fins_snorkel', 'bcd', 'regulator', 'tank', 'weights', 'computer', 'flashlight'],
+            modules: [
+              {
+                id: 'seal_am1',
+                title: 'AquaMission 1',
+                type: 'confined',
+                depth: 'Max 2m / 6ft',
+                skills: [
+                  { id: 'am1_1', name: 'Breathing underwater' },
+                  { id: 'am1_2', name: 'Control depth & direction' },
+                  { id: 'am1_3', name: 'Equalize ears & mask' },
+                  { id: 'am1_4', name: 'Monitor SPG (signal ok/low)' },
+                  { id: 'am1_5', name: 'Hand signals' },
+                  { id: 'am1_6', name: 'Proper ascent' },
+                ]
+              },
+              {
+                id: 'seal_am2',
+                title: 'AquaMission 2',
+                type: 'confined',
+                skills: [
+                  { id: 'am2_1', name: 'Regulator clear (purge)' },
+                  { id: 'am2_2', name: 'Equalize ears/mask' },
+                  { id: 'am2_3', name: 'Hand signals' },
+                  { id: 'am2_4', name: 'Ascent' },
+                ]
+              },
+              {
+                id: 'seal_am3',
+                title: 'AquaMission 3',
+                type: 'confined',
+                skills: [
+                  { id: 'am3_1', name: 'Inflate/Deflate BCD surface (LPI)' },
+                  { id: 'am3_2', name: 'Clear partially flooded mask' },
+                  { id: 'am3_3', name: 'Breathe from alternate air source (30s)' },
+                ]
+              },
+              {
+                id: 'seal_am4',
+                title: 'AquaMission 4',
+                type: 'confined',
+                skills: [
+                  { id: 'am4_1', name: 'Recover regulator from behind shoulder' },
+                  { id: 'am4_2', name: 'Regulator clear (exhale)' },
+                  { id: 'am4_3', name: 'Neutral buoyancy (LPI)' },
+                  { id: 'am4_4', name: 'Hover' },
+                ]
+              },
+              {
+                id: 'seal_am5',
+                title: 'AquaMission 5',
+                type: 'confined',
+                skills: [
+                  { id: 'am5_1', name: 'Snorkel clear (blast)' },
+                  { id: 'am5_2', name: 'Snorkel-Regulator exchange' },
+                  { id: 'am5_3', name: 'Surface swim with scuba' },
+                  { id: 'am5_4', name: 'Oral BCD inflation' },
+                ],
+                notes: ['Completing AM 1-5 qualifies for PADI Seal Team Member.']
+              }
+            ]
+          },
+          {
+            id: 'dsd',
+            category: 'program',
+            title: 'Discover Scuba Diving',
+            shortTitle: 'DSD',
+            color: 'teal',
+            icon: 'mask',
+            minAge: 10,
+            maxDepth: '6m (Pool) | 12m (OW)',
+            ratios: {
+              confined: '8:1',
+              open: '4:1',
+              details: 'Pool: 8:1. Open Water: 4:1. If 10-11y/o participating in OW, max ratio is 4:1. You can add 2 participants per certified assistant.'
+            },
+            prereqs: ['None'],
+            requiredEquipment: ['mask_fins_snorkel', 'bcd', 'regulator', 'tank', 'weights', 'computer', 'whistle'],
+            modules: [
+              {
+                id: 'dsd_cw',
+                title: 'Confined Water (Mandatory)',
+                type: 'confined',
+                depth: 'Shallow water first, then max 6m',
+                skills: [
+                  { id: 'dsd_1', name: 'Breathing underwater' },
+                  { id: 'dsd_2', name: 'Regulator clearing' },
+                  { id: 'dsd_3', name: 'Regulator recovery' },
+                  { id: 'dsd_4', name: 'Mask clearing' },
+                  { id: 'dsd_5', name: 'Equalization techniques' },
+                  { id: 'dsd_6', name: 'Inflate/Deflate BCD at surface (Pool only)' },
+                ],
+                notes: ['Instructor MUST conduct the CW session if OW dive is planned.', 'Divemaster (DSD Leader) can conduct Pool only.']
+              },
+              {
+                id: 'dsd_ow',
+                title: 'Open Water Dive (Optional)',
+                type: 'open_water',
+                depth: 'Max 12m / 40ft',
+                prerequisites: ['dsd_cw'],
+                skills: [
+                  { id: 'dsd_ow_1', name: 'Practice skills in shallow water if not done in pool' },
+                  { id: 'dsd_ow_2', name: 'Guided tour of dive site' },
+                ],
+                notes: ['Must be directly supervised by an Instructor.', 'Valid for 14 days for subsequent dives.']
+              }
+            ]
+          },
+          {
+            id: 'skin_diver',
+            category: 'program',
+            title: 'Advanced Snorkeler (Skin Diver)',
+            shortTitle: 'Skin Diver',
+            color: 'teal',
+            icon: 'fins',
+            minAge: 8,
+            maxDepth: 'N/A',
+            ratios: {
+              confined: '16:1',
+              open: '10:1',
+            },
+            prereqs: ['None'],
+            requiredEquipment: ['mask_fins_snorkel', 'bcd'],
+            modules: [
+              {
+                id: 'sd_cw',
+                title: 'Confined Water Session',
+                type: 'confined',
+                skills: [
+                  { id: 'sd_1', name: 'Assemble/adjust gear' },
+                  { id: 'sd_2', name: 'Safety check' },
+                  { id: 'sd_3', name: 'Entry/Exit techniques' },
+                  { id: 'sd_4', name: 'Proper weighting' },
+                  { id: 'sd_5', name: 'Snorkel breathing & airway control' },
+                  { id: 'sd_6', name: 'Blast clear snorkel' },
+                  { id: 'sd_7', name: 'Surface buoyancy' },
+                  { id: 'sd_8', name: 'Head first surface dive (vertical)' },
+                  { id: 'sd_9', name: 'Swim underwater 15m on one breath' },
+                  { id: 'sd_10', name: 'Ascend with hand up & look up' },
+                ]
+              }
+            ]
+          },
+          {
+            id: 'reactivate',
+            category: 'program',
+            title: 'ReActivate',
+            shortTitle: 'ReActivate',
+            color: 'teal',
+            icon: 'refresh',
+            minAge: 10,
+            maxDepth: 'Varies by cert level',
+            ratios: {
+              confined: '10:1',
+              open: '8:1',
+            },
+            prereqs: ['PADI (Junior) Scuba Diver or entry level from other org'],
+            requiredEquipment: ['mask_fins_snorkel', 'bcd', 'regulator', 'tank', 'weights', 'computer'],
+            modules: [
+              {
+                id: 'ra_skill',
+                title: 'Skill Review Session',
+                type: 'confined',
+                skills: [
+                  { id: 'ra_1', name: 'Remove, replace, clear mask' },
+                  { id: 'ra_2', name: 'Neutral buoyancy & hover' },
+                  { id: 'ra_3', name: 'Emergency weight drop (surface)' },
+                  { id: 'ra_4', name: 'Alternate air source ascent' },
+                  { id: 'ra_5', name: '+ Any skills diver wants to practice' },
+                ],
+                notes: ['Use prescriptive method: Interview diver first.', 'Check logbook.']
+              }
+            ]
+          },
+
+          // --- CORE COURSES ---
+          {
+            id: 'open_water',
+            category: 'core',
+            title: 'Open Water Diver',
+            shortTitle: 'OWD',
+            color: 'blue',
+            icon: 'scuba',
+            minAge: 10,
+            minAgeDetails: '10-14 for Junior OW. 10-11y/o: Max 12m, must dive with parent/guardian or Pro.',
+            maxDepth: '18m / 60ft',
+            ratios: {
+              confined: '10:1',
+              open: '8:1',
+              details: 'Confined: 10:1 (+4/assistant). Open Water: 8:1 (+2/assistant, max 12). If 10-11y/o present in OW: 4:1 (max 2 children).'
+            },
+            prereqs: ['None'],
+            requiredEquipment: ['mask_fins_snorkel', 'bcd', 'regulator', 'tank', 'weights', 'computer', 'whistle', 'compass', 'dsmb'],
+            modules: [
+              {
+                id: 'cw_1',
+                title: 'Confined Water 1',
+                type: 'confined',
+                depth: 'Stand-up depth',
+                skills: [
+                  { id: 'cw1_1', name: 'Equipment assembly' },
+                  { id: 'cw1_2', name: 'Inflate/deflate BCD surface' },
+                  { id: 'cw1_3', name: 'Regulator clear (exhale & purge)' },
+                  { id: 'cw1_4', name: 'Regulator recovery (arm sweep & reach)' },
+                  { id: 'cw1_5', name: 'Clear partially flooded mask' },
+                  { id: 'cw1_6', name: 'Breathe from alternate air source (30s stationary)' },
+                ]
+              },
+              {
+                id: 'cw_2',
+                title: 'Confined Water 2',
+                type: 'confined',
+                skills: [
+                  { id: 'cw2_1', name: 'Deep water entry' },
+                  { id: 'cw2_2', name: 'Proper weighting check' },
+                  { id: 'cw2_3', name: 'Snorkel/Regulator exchange' },
+                  { id: 'cw2_4', name: '5-point descent' },
+                  { id: 'cw2_5', name: 'Neutral buoyancy (fin pivot, LPI)' },
+                  { id: 'cw2_6', name: 'Clear fully flooded mask' },
+                  { id: 'cw2_7', name: 'Air depletion signal & alternate air source' },
+                ]
+              },
+              {
+                id: 'cw_3',
+                title: 'Confined Water 3',
+                type: 'confined',
+                skills: [
+                  { id: 'cw3_1', name: 'Cramp removal (self & buddy)' },
+                  { id: 'cw3_2', name: 'Visual reference descent' },
+                  { id: 'cw3_3', name: 'Hover (30s)' },
+                  { id: 'cw3_4', name: 'CESA simulation (9m horizontal)' },
+                ]
+              },
+              {
+                id: 'cw_4',
+                title: 'Confined Water 4',
+                type: 'confined',
+                skills: [
+                  { id: 'cw4_1', name: 'Tired diver tow (25m)' },
+                  { id: 'cw4_2', name: 'Scuba unit remove/replace (surface)' },
+                  { id: 'cw4_3', name: 'Swim over sensitive bottom' },
+                  { id: 'cw4_4', name: 'Oral BCD inflation (hover 1 min)' },
+                  { id: 'cw4_5', name: 'Free-flow regulator breathing (30s)' },
+                  { id: 'cw4_6', name: 'No mask swim (15m)' },
+                ]
+              },
+              {
+                id: 'cw_5',
+                title: 'Confined Water 5',
+                type: 'confined',
+                skills: [
+                  { id: 'cw5_1', name: 'Scuba unit remove/replace (underwater)' },
+                  { id: 'cw5_2', name: 'Weight system remove/replace (underwater)' },
+                  { id: 'cw5_3', name: 'Weight system remove/replace (surface)' },
+                  { id: 'cw5_4', name: 'Mini dive (planning, entry, descent, skills, ascent)' },
+                ]
+              },
+              {
+                id: 'ow_1',
+                title: 'Open Water Dive 1',
+                type: 'open_water',
+                depth: 'Max 12m / 40ft',
+                prerequisites: ['cw_1'],
+                skills: [
+                  { id: 'ow1_1', name: 'Briefing & Equipment Assembly' },
+                  { id: 'ow1_2', name: 'Put on gear & Safety Check' },
+                  { id: 'ow1_3', name: 'Controlled descent (max 12m)' },
+                  { id: 'ow1_4', name: 'Trim check' },
+                  { id: 'ow1_5', name: 'Clear partially flooded mask' },
+                  { id: 'ow1_6', name: 'Recover & clear regulator' },
+                  { id: 'ow1_7', name: 'Explore dive site' },
+                ]
+              },
+              {
+                id: 'ow_2',
+                title: 'Open Water Dive 2',
+                type: 'open_water',
+                depth: 'Max 12m / 40ft',
+                prerequisites: ['ow_1', 'cw_1-3'],
+                skills: [
+                  { id: 'ow2_1', name: 'Buoyancy check at surface' },
+                  { id: 'ow2_2', name: '5-point descent' },
+                  { id: 'ow2_3', name: 'Neutral buoyancy (fin pivot or hover)' },
+                  { id: 'ow2_4', name: 'Clear fully flooded mask' },
+                  { id: 'ow2_5', name: 'Alternate Air Source Ascent' },
+                ]
+              },
+              {
+                id: 'ow_3',
+                title: 'Open Water Dive 3',
+                type: 'open_water',
+                depth: 'Max 18m / 60ft',
+                prerequisites: ['ow_2', 'cw_1-5'],
+                skills: [
+                  { id: 'ow3_1', name: 'Visual reference descent (max 18m)' },
+                  { id: 'ow3_2', name: 'Hover (oral inflation)' },
+                  { id: 'ow3_3', name: 'Mask remove and replace' },
+                  { id: 'ow3_4', name: 'Explore & Safety Stop' },
+                ]
+              },
+              {
+                id: 'ow_4',
+                title: 'Open Water Dive 4',
+                type: 'open_water',
+                depth: 'Max 18m / 60ft',
+                skills: [
+                  { id: 'ow4_1', name: 'Descent (no visual ref)' },
+                  { id: 'ow4_2', name: 'Explore & Safety Stop' },
+                ]
+              },
+              {
+                id: 'ow_flex',
+                title: 'Flexible Skills (Any OW Dive)',
+                type: 'open_water',
+                skills: [
+                  { id: 'fl_1', name: 'Cramp removal (surface)' },
+                  { id: 'fl_2', name: 'Tired diver tow 25m (surface)' },
+                  { id: 'fl_3', name: 'Snorkel/Regulator exchange (surface)' },
+                  { id: 'fl_4', name: 'Surface swim with compass 50m' },
+                  { id: 'fl_5', name: 'Deploy DSMB (surface or underwater)' },
+                  { id: 'fl_6', name: 'Remove/Replace Weights & Scuba (surface)' },
+                  { id: 'fl_7', name: 'Emergency Weight Drop' },
+                  { id: 'fl_8', name: 'Compass Navigation (reciprocal)' },
+                  { id: 'fl_9', name: 'CESA (6-9m)' },
+                ]
+              }
+            ]
+          },
+          {
+            id: 'advanced',
+            category: 'core',
+            title: 'Advanced Open Water',
+            shortTitle: 'AOW',
+            color: 'red',
+            icon: 'compass',
+            minAge: 12,
+            minAgeDetails: '12-14 Junior AOW. Max 21m depth.',
+            maxDepth: '30m / 100ft',
+            ratios: {
+              open: '8:1',
+              details: 'Deep Dive: 8:1 max. No extra students with assistants for Deep.'
+            },
+            prereqs: ['Open Water Diver'],
+            requiredEquipment: ['mask_fins_snorkel', 'bcd', 'regulator', 'tank', 'weights', 'computer', 'compass', 'knife', 'whistle'],
+            modules: [
+              {
+                id: 'adv_info',
+                title: 'Course Structure',
+                type: 'knowledge',
+                skills: [
+                  { id: 'inf_1', name: 'Total 5 Dives Required' },
+                  { id: 'inf_2', name: 'Mandatory: Deep' },
+                  { id: 'inf_3', name: 'Mandatory: Underwater Navigation' },
+                  { id: 'inf_4', name: 'Elective: Choose 3 others' },
+                ]
+              },
+              {
+                id: 'adv_nav',
+                title: 'Navigation Dive (Mandatory)',
+                type: 'open_water',
+                skills: [
+                  { id: 'nav_1', name: 'Maintain neutral buoyancy' },
+                  { id: 'nav_2', name: 'Determine kick cycles for distance' },
+                  { id: 'nav_3', name: 'Navigate out & back (natural ref, 15m)' },
+                  { id: 'nav_4', name: 'Navigate out & back (compass, 6m)' },
+                  { id: 'nav_5', name: 'Navigate square pattern (compass)' },
+                ]
+              },
+              {
+                id: 'adv_deep',
+                title: 'Deep Dive (Mandatory)',
+                type: 'open_water',
+                depth: '18-30m / 60-100ft',
+                skills: [
+                  { id: 'deep_1', name: 'Plan gas management' },
+                  { id: 'deep_2', name: 'Descend using line/contour' },
+                  { id: 'deep_3', name: 'Compare color changes at depth' },
+                  { id: 'deep_4', name: 'Compare depth gauge/computer readings' },
+                  { id: 'deep_5', name: 'Ascent rate control (max 18m/min)' },
+                  { id: 'deep_6', name: 'Safety Stop (3 min @ 5m)' },
+                ]
+              },
+              {
+                id: 'adv_pp',
+                title: 'Peak Performance Buoyancy (Elective)',
+                type: 'open_water',
+                skills: [
+                  { id: 'ppb_1', name: 'Determine proper weighting' },
+                  { id: 'ppb_2', name: 'Descend & establish neutral buoyancy' },
+                  { id: 'ppb_3', name: 'Hover (1 min) w/o hand/fin movement' },
+                  { id: 'ppb_4', name: 'Swim horizontally neutral' },
+                ]
+              },
+              {
+                id: 'adv_night',
+                title: 'Night Dive (Elective)',
+                type: 'open_water',
+                skills: [
+                  { id: 'night_1', name: 'Descent with visual ref' },
+                  { id: 'night_2', name: 'Communicate with light/hand signals' },
+                  { id: 'night_3', name: 'Use light, gauge, compass at night' },
+                  { id: 'night_4', name: 'Navigate & return to within 8m of start' },
+                  { id: 'night_5', name: 'Maintain buddy contact' },
+                ],
+                notes: ['Requires primary & backup light + marker light.']
+              },
+              {
+                id: 'adv_wreck',
+                title: 'Wreck Dive (Elective)',
+                type: 'open_water',
+                skills: [
+                  { id: 'wreck_1', name: 'Swim along outside of wreck' },
+                  { id: 'wreck_2', name: 'Identify hazards' },
+                  { id: 'wreck_3', name: 'Navigate wreck to ascent point' },
+                ],
+                notes: ['NO PENETRATION allowed in Adventure Dive.']
+              },
+              {
+                id: 'adv_drift',
+                title: 'Drift Dive (Elective)',
+                type: 'open_water',
+                skills: [
+                  { id: 'drift_1', name: 'Plan for currents' },
+                  { id: 'drift_2', name: 'Entry specific to environment' },
+                  { id: 'drift_3', name: 'Maintain buddy contact in current' },
+                  { id: 'drift_4', name: 'Neutral buoyancy (avoid bottom contact)' },
+                ]
+              },
+              {
+                id: 'adv_boat',
+                title: 'Boat Dive (Elective)',
+                type: 'open_water',
+                skills: [
+                  { id: 'boat_1', name: 'Identify boat emergency equipment' },
+                  { id: 'boat_2', name: 'Entry specific to boat' },
+                  { id: 'boat_3', name: 'DSMB deployment' },
+                  { id: 'boat_4', name: 'Exit specific to boat' },
+                ]
+              },
+              {
+                id: 'adv_sar',
+                title: 'Search & Recovery (Elective)',
+                type: 'open_water',
+                skills: [
+                  { id: 'sar_1', name: 'Search area 15x15m (small object)' },
+                  { id: 'sar_2', name: 'Search area 30x30m (large object)' },
+                  { id: 'sar_3', name: 'Tie knots underwater (bowline, 2 half-hitches, sheet bend)' },
+                  { id: 'sar_4', name: 'Lift object using lift bag (<11kg)' },
+                ]
+              }
+            ]
+          },
+          {
+            id: 'rescue',
+            category: 'core',
+            title: 'Rescue Diver',
+            shortTitle: 'Rescue',
+            color: 'slate',
+            icon: 'lifebuoy',
+            minAge: 12,
+            maxDepth: '9m / 30ft (Ex 6 & Scenario 1)',
+            ratios: {
+              open: '8:1',
+            },
+            prereqs: ['Adventure Diver (with Nav dive completed)', 'EFR (last 24mo)'],
+            requiredEquipment: ['mask_fins_snorkel', 'bcd', 'regulator', 'tank', 'weights', 'pocket_mask', 'slate', 'first_aid_kit', 'oxygen_unit', 'floats'],
+            modules: [
+              {
+                id: 'res_self',
+                title: 'Self-Rescue Review',
+                type: 'confined',
+                skills: [
+                  { id: 'sr_1', name: 'Cramp release' },
+                  { id: 'sr_2', name: 'Surface buoyancy' },
+                  { id: 'sr_3', name: 'Airway control' },
+                  { id: 'sr_4', name: 'Use alternate air source' },
+                  { id: 'sr_5', name: 'Vertigo/disorientation recovery' },
+                ]
+              },
+              {
+                id: 'res_ex_1',
+                title: 'Ex 1: Tired Diver',
+                type: 'open_water',
+                skills: [
+                  { id: 'r1_1', name: 'Approach & Evaluate' },
+                  { id: 'r1_2', name: 'Contact & Reassure' },
+                  { id: 'r1_3', name: 'Assist & Transport' },
+                  { id: 'r1_4', name: 'Equipment removal' },
+                ]
+              },
+              {
+                id: 'res_ex_2',
+                title: 'Ex 2: Panicked Diver',
+                type: 'open_water',
+                skills: [
+                  { id: 'r2_1', name: 'Approach & Evaluate' },
+                  { id: 'r2_2', name: 'Contact (surface)' },
+                  { id: 'r2_3', name: 'Releases/Escapes' },
+                ]
+              },
+              {
+                id: 'res_ex_3',
+                title: 'Ex 3: Response from Shore/Boat',
+                type: 'open_water',
+                skills: [
+                  { id: 'r3_1', name: 'Non-swimming assists (reach/throw)' },
+                  { id: 'r3_2', name: 'Water entry with view of victim' },
+                  { id: 'r3_3', name: 'Tows (tank valve, underarm)' },
+                ]
+              },
+              {
+                id: 'res_ex_4',
+                title: 'Ex 4: Distressed Diver Underwater',
+                type: 'open_water',
+                skills: [
+                  { id: 'r4_1', name: 'Identify overexertion' },
+                  { id: 'r4_2', name: 'Identify panic/uncontrolled ascent' },
+                  { id: 'r4_3', name: 'Share air (alternate air source ascent)' },
+                ]
+              },
+              {
+                id: 'res_ex_5',
+                title: 'Ex 5: Missing Diver',
+                type: 'open_water',
+                skills: [
+                  { id: 'r5_1', name: 'Underwater search pattern' },
+                ]
+              },
+              {
+                id: 'res_ex_6',
+                title: 'Ex 6: Surfacing Unconscious Diver',
+                type: 'open_water',
+                skills: [
+                  { id: 'r6_1', name: 'Use positive buoyancy to ascend' },
+                  { id: 'r6_2', name: 'Bring victim to surface' },
+                ]
+              },
+              {
+                id: 'res_ex_7',
+                title: 'Ex 7: Unconscious Diver at Surface',
+                type: 'open_water',
+                skills: [
+                  { id: 'r7_1', name: 'Approach & Turn face up' },
+                  { id: 'r7_2', name: 'Check breathing (Look, Listen, Feel)' },
+                  { id: 'r7_3', name: 'Remove mask/regulator' },
+                  { id: 'r7_4', name: '2 Rescue breaths' },
+                  { id: 'r7_5', name: 'Rescue breathing while towing (5s intervals)' },
+                  { id: 'r7_6', name: 'Equipment removal while towing' },
+                ],
+                critical: true
+              },
+              {
+                id: 'res_ex_8',
+                title: 'Ex 8: Exiting Unconscious Diver',
+                type: 'open_water',
+                skills: [
+                  { id: 'r8_1', name: 'Exit with breathing victim' },
+                  { id: 'r8_2', name: 'Exit with non-breathing victim' },
+                ]
+              },
+              {
+                id: 'res_ex_9',
+                title: 'Ex 9: First Aid / Oxygen',
+                type: 'open_water',
+                skills: [
+                  { id: 'r9_1', name: 'Administer O2 to breathing patient' },
+                  { id: 'r9_2', name: 'Administer O2 to non-breathing patient (mask)' },
+                ]
+              },
+              {
+                id: 'res_ex_10',
+                title: 'Ex 10: Response from Shore/Boat (Unconscious)',
+                type: 'open_water',
+                skills: [
+                  { id: 'r10_1', name: 'Respond to non-breathing victim' },
+                  { id: 'r10_2', name: 'Rescue breathing in water' },
+                  { id: 'r10_3', name: 'Exit & CPR' },
+                ]
+              },
+              {
+                id: 'res_scenarios',
+                title: 'Rescue Scenarios 1 & 2',
+                type: 'open_water',
+                skills: [
+                  { id: 'sc_1', name: 'Scenario 1: Search & locate missing diver' },
+                  { id: 'sc_2', name: 'Scenario 2: Response to unconscious diver at surface (tow, exit, CPR)' },
+                ]
+              }
+            ]
+          },
+
+          // --- PROFESSIONAL COURSES ---
+          {
+            id: 'junior_divemaster',
+            category: 'pro',
+            title: 'Junior Divemaster',
+            shortTitle: 'Jr DM',
+            color: 'slate',
+            icon: 'badge',
+            minAge: 15,
+            minAgeDetails: 'Ages 15-17. subset of DM course.',
+            maxDepth: '40m / 130ft',
+            ratios: {
+              open: '8:1',
+              details: 'Same ratio as Divemaster course for training.'
+            },
+            prereqs: ['Advanced Open Water', 'Rescue Diver', '20 Logged Dives', 'Medical (12mo)'],
+            requiredEquipment: ['mask_fins_snorkel', 'bcd', 'regulator', 'tank', 'weights', 'computer', 'compass', 'knife', 'whistle', 'dsmb', 'slate'],
+            modules: [
+              {
+                id: 'jdm_info',
+                title: 'Overview',
+                type: 'knowledge',
+                skills: [
+                  { id: 'jdm_i1', name: 'Materials: DM eLearning or Manual' },
+                  { id: 'jdm_i2', name: 'Exam: Jr DM Exam (pass 75%)' },
+                  { id: 'jdm_i3', name: 'Plan: Create Emergency Assistance Plan' },
+                ]
+              },
+              {
+                id: 'jdm_water',
+                title: 'Water Skills (4 Exercises)',
+                type: 'confined',
+                skills: [
+                  { id: 'jws_1', name: '400m Swim (non-stop)' },
+                  { id: 'jws_2', name: '15 min Tread (last 2 min hands out)' },
+                  { id: 'jws_3', name: '800m Snorkel (non-stop)' },
+                  { id: 'jws_4', name: '100m Inert Diver Tow (non-stop)' },
+                ],
+                notes: ['Equipment Exchange is NOT required for Jr DM.']
+              },
+              {
+                id: 'jdm_rescue',
+                title: 'Rescue Assessment',
+                type: 'open_water',
+                skills: [
+                  { id: 'jrs_1', name: 'Unresponsive diver rescue' },
+                ]
+              },
+              {
+                id: 'jdm_practical',
+                title: 'Practical Application',
+                type: 'open_water',
+                skills: [
+                  { id: 'jpa_1', name: 'Setup & Manage Dive Site (Assist Pro)' },
+                  { id: 'jpa_2', name: 'Mapping Project (Indirect Supervision)' },
+                  { id: 'jpa_3', name: 'Dive Briefing (to Instructor only)' },
+                  { id: 'jpa_4', name: 'Search & Recovery Scenario' },
+                ],
+                notes: ['Can help/shadow Pro but CANNOT act as certified assistant.', 'Cannot supervise students.']
+              },
+              {
+                id: 'jdm_cert',
+                title: 'Certification Requirements',
+                type: 'knowledge',
+                skills: [
+                  { id: 'jc_1', name: '40 Logged Dives' },
+                  { id: 'jc_2', name: 'EFR Primary/Secondary (24mo)' },
+                  { id: 'jc_3', name: 'Professionalism criteria met' },
+                ]
+              }
+            ]
+          },
+          {
+            id: 'divemaster',
+            category: 'pro',
+            title: 'Divemaster',
+            shortTitle: 'DM',
+            color: 'slate',
+            icon: 'badge',
+            minAge: 18,
+            maxDepth: '40m / 130ft',
+            ratios: {
+              open: '8:1',
+            },
+            prereqs: ['Rescue Diver', '40 Logged Dives', 'EFR (24mo)', 'Medical (12mo)'],
+            requiredEquipment: ['mask_fins_snorkel', 'bcd', 'regulator', 'tank', 'weights', 'computer', 'compass', 'knife', 'whistle', 'dsmb', 'slate'],
+            modules: [
+              {
+                id: 'dm_skill_circuit',
+                title: 'Skill Circuit (24 Skills)',
+                type: 'confined',
+                skills: [
+                  { id: 'dm_1', name: '1. Equipment assembly' },
+                  { id: 'dm_2', name: '2. Pre-dive safety check' },
+                  { id: 'dm_3', name: '3. Deep water entry' },
+                  { id: 'dm_4', name: '4. Buoyancy check' },
+                  { id: 'dm_5', name: '5. Snorkel-regulator exchange' },
+                  { id: 'dm_6', name: '6. 5-point descent' },
+                  { id: 'dm_7', name: '7. Regulator recovery' },
+                  { id: 'dm_8', name: '8. Mask remove/replace' },
+                  { id: 'dm_9', name: '9. Air depletion exercise' },
+                  { id: 'dm_10', name: '10. Alternate air source ascent' },
+                  { id: 'dm_11', name: '11. Free flow regulator' },
+                  { id: 'dm_12', name: '12. Neutral buoyancy (hover)' },
+                  { id: 'dm_13', name: '13. 5-point ascent' },
+                  { id: 'dm_14', name: '14. CESA' },
+                  { id: 'dm_15', name: '15. Inflate BCD orally at surface' },
+                  { id: 'dm_16', name: '16. No mask swim' },
+                  { id: 'dm_17', name: '17. Remove/replace weights underwater' },
+                  { id: 'dm_18', name: '18. Remove/replace scuba unit underwater' },
+                  { id: 'dm_19', name: '19. Remove/replace scuba unit surface' },
+                  { id: 'dm_20', name: '20. Remove/replace weights surface' },
+                  { id: 'dm_21', name: '21. Head first surface dive' },
+                  { id: 'dm_22', name: '22. Disconnect low pressure inflator' },
+                  { id: 'dm_23', name: '23. Secure loose cylinder band' },
+                  { id: 'dm_24', name: '24. Emergency weight drop' },
+                ],
+                notes: ['Score of 3 required on each skill.', 'Total score of 82 required.', 'At least one underwater skill must score 5.']
+              },
+              {
+                id: 'dm_watermanship',
+                title: 'Watermanship Skills',
+                type: 'confined',
+                skills: [
+                  { id: 'ws_1', name: '400m Swim' },
+                  { id: 'ws_2', name: '15 min Tread (last 2 min hands out)' },
+                  { id: 'ws_3', name: '800m Snorkel' },
+                  { id: 'ws_4', name: '100m Inert Diver Tow' },
+                  { id: 'ws_5', name: 'Equipment Exchange (stress test)' },
+                ]
+              },
+              {
+                id: 'dm_practical',
+                title: 'Practical Application',
+                type: 'open_water',
+                skills: [
+                  { id: 'pa_1', name: 'Dive Site Set Up & Management' },
+                  { id: 'pa_2', name: 'Mapping Project' },
+                  { id: 'pa_3', name: 'Dive Briefing' },
+                  { id: 'pa_4', name: 'Search & Recovery Scenario' },
+                  { id: 'pa_5', name: 'Deep Dive Scenario' },
+                ]
+              }
+            ]
+          },
+
+          // --- SPECIALTIES SUMMARY ---
+          {
+            id: 'specialties_summary',
+            category: 'specialty',
+            title: 'Popular Specialties',
+            shortTitle: 'Specs',
+            color: 'purple',
+            icon: 'star',
+            minAge: 'Varies',
+            maxDepth: 'Varies',
+            ratios: {
+              open: 'Varies',
+              details: 'Check individual instructor guides.'
+            },
+            prereqs: ['Varies'],
+            requiredEquipment: [],
+            modules: [
+              {
+                id: 'spec_deep',
+                title: 'Deep Diver',
+                type: 'open_water',
+                depth: '18-40m',
+                skills: [
+                  { id: 'sp_dp_1', name: 'Min Age: 15' },
+                  { id: 'sp_dp_2', name: 'Prereq: Adventure Diver' },
+                  { id: 'sp_dp_3', name: 'Dives: 4' },
+                  { id: 'sp_dp_4', name: 'Ratio: 8:1' },
+                ]
+              },
+              {
+                id: 'spec_ean',
+                title: 'Enriched Air (Nitrox)',
+                type: 'knowledge',
+                skills: [
+                  { id: 'sp_ean_1', name: 'Min Age: 12' },
+                  { id: 'sp_ean_2', name: 'Prereq: OW Diver' },
+                  { id: 'sp_ean_3', name: 'Dives: 2 (Optional)' },
+                  { id: 'sp_ean_4', name: 'Ratio: 8:1' },
+                ]
+              },
+              {
+                id: 'spec_wreck',
+                title: 'Wreck Diver',
+                type: 'open_water',
+                skills: [
+                  { id: 'sp_wr_1', name: 'Min Age: 15' },
+                  { id: 'sp_wr_2', name: 'Prereq: Adventure Diver' },
+                  { id: 'sp_wr_3', name: 'Dives: 4' },
+                  { id: 'sp_wr_4', name: 'Ratio: 8:1 (2:1 for penetration)' },
+                ]
+              },
+              {
+                id: 'spec_dry',
+                title: 'Dry Suit Diver',
+                type: 'open_water',
+                skills: [
+                  { id: 'sp_ds_1', name: 'Min Age: 10' },
+                  { id: 'sp_ds_2', name: 'Prereq: OW Diver' },
+                  { id: 'sp_ds_3', name: 'Dives: 2' },
+                  { id: 'sp_ds_4', name: 'Ratio: 6:1 (4:1 deep)' },
+                ]
+              },
+              {
+                id: 'spec_night',
+                title: 'Night Diver',
+                type: 'open_water',
+                skills: [
+                  { id: 'sp_ni_1', name: 'Min Age: 12' },
+                  { id: 'sp_ni_2', name: 'Prereq: OW Diver' },
+                  { id: 'sp_ni_3', name: 'Dives: 3' },
+                  { id: 'sp_ni_4', name: 'Ratio: 8:1' },
+                ]
+              }
+            ]
+          }
+        ];
+
+        // --- COURSE DETAIL COMPONENT ---
+        const CourseDetail = ({ course, onBack }) => {
+            const [activeTab, setActiveTab] = React.useState('overview');
+
+            const confinedModules = course.modules.filter(m => m.type === 'confined');
+            const openWaterModules = course.modules.filter(m => m.type === 'open_water');
+            const knowledgeModules = course.modules.filter(m => m.type === 'knowledge' || m.type === 'exam');
+
+            const renderModuleCard = (module) => (
+                <div key={module.id} className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-4 hover:shadow-md transition-shadow duration-200">
+                    <div className="bg-slate-50 p-4 border-b border-slate-200 flex justify-between items-center">
+                        <div className="w-full">
+                            <div className="flex justify-between items-start w-full">
+                                <h3 className="font-bold text-slate-800 text-lg leading-tight pr-4">{module.title}</h3>
+                                {module.depth && (
+                                    <span className="text-[10px] uppercase font-bold bg-blue-100 text-blue-800 px-2 py-1 rounded shrink-0">
+                                        {module.depth}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="p-5">
+                        {module.prerequisites && module.prerequisites.length > 0 && (
+                            <div className="mb-4 p-3 bg-yellow-50 text-yellow-800 text-xs rounded border border-yellow-200 flex items-start gap-2">
+                                <span className="font-bold uppercase tracking-wider shrink-0 mt-0.5">Prereq:</span> 
+                                <span>Must complete {module.prerequisites.join(', ')} first.</span>
+                            </div>
+                        )}
+                        
+                        {module.notes && module.notes.length > 0 && (
+                            <div className="mb-4 p-3 bg-red-50 text-red-800 text-xs rounded border border-red-200 flex items-start gap-2">
+                                <span className="font-bold uppercase tracking-wider shrink-0 mt-0.5">Note:</span>
+                                <div className="flex flex-col gap-1">
+                                    {module.notes.map((note, idx) => <span key={idx}>{note}</span>)}
+                                </div>
+                            </div>
+                        )}
+
+                        {module.skills.length > 0 && (
+                            <div>
+                                <h4 className="text-xs uppercase text-slate-400 font-bold tracking-wider mb-3">Skills / Requirements</h4>
+                                <ul className="space-y-3">
+                                    {module.skills.map(skill => (
+                                        <li key={skill.id} className="flex items-start gap-3 text-sm text-slate-700 group">
+                                            <div className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${skill.critical ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`}>
+                                                <IconCheck className="w-3.5 h-3.5" />
+                                            </div>
+                                            <span className={`${skill.critical ? 'font-semibold text-slate-900' : ''}`}>
+                                                {skill.name} 
+                                                {skill.critical && <span className="ml-2 text-red-500 text-xs font-bold uppercase tracking-wide">Critical</span>}
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="animate-in fade-in slide-in-from-bottom-4 duration-300 min-h-screen bg-slate-50 pb-20">
+                    <div className={`bg-${course.color}-600 text-white p-6 sticky top-0 z-50 shadow-lg`}>
+                        <div className="max-w-5xl mx-auto flex items-start gap-4">
+                            <button onClick={onBack} className="flex flex-col items-center justify-center p-2 hover:bg-white/20 rounded-lg transition-colors -ml-2">
+                                <IconArrowLeft className="w-6 h-6" />
+                                <span className="text-[10px] font-bold uppercase mt-1">Back</span>
+                            </button>
+                            <div>
+                                <div className="flex items-center gap-3 mb-1">
+                                    <span className="text-xs font-bold uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded text-white/90">
+                                        {course.category === 'program' ? 'Program' : course.category === 'specialty' ? 'Specialty' : 'Course'}
+                                    </span>
+                                </div>
+                                <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight leading-none">{course.title}</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-white border-b border-slate-200 shadow-sm relative z-10">
+                        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-slate-100">
+                            <div className="p-4 flex flex-col items-center justify-center text-center group relative cursor-help">
+                                <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Min Age</div>
+                                <div className="font-bold text-slate-800 text-xl">{course.minAge}</div>
+                                {course.minAgeDetails && (
+                                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-slate-800 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 text-center border border-slate-700">
+                                        {course.minAgeDetails}
+                                    </div>
+                                )}
+                                {course.minAgeDetails && <IconInfo className="w-3 h-3 text-slate-300 absolute top-4 right-4" />}
+                            </div>
+
+                            <div className="p-4 flex flex-col items-center justify-center text-center group relative cursor-help">
+                                <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Ratios (Conf/Open)</div>
+                                <div className="font-bold text-slate-800 text-lg flex items-center gap-1">
+                                    <span>{course.ratios.confined || '-'}</span>
+                                    <span className="text-slate-300">/</span>
+                                    <span>{course.ratios.open || '-'}</span>
+                                </div>
+                                {course.ratios.details && (
+                                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-slate-800 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 text-center border border-slate-700">
+                                        {course.ratios.details}
+                                    </div>
+                                )}
+                                {course.ratios.details && <IconInfo className="w-3 h-3 text-slate-300 absolute top-4 right-4" />}
+                            </div>
+
+                            <div className="p-4 flex flex-col items-center justify-center text-center col-span-2 md:col-span-1">
+                                <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Max Depth</div>
+                                <div className="font-bold text-slate-800 text-lg leading-tight">{course.maxDepth}</div>
+                            </div>
+
+                            <div className="p-4 flex flex-col items-center justify-center text-center hidden md:flex">
+                                <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Modules</div>
+                                <div className="font-bold text-slate-800 text-lg">{course.modules.length}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="max-w-3xl mx-auto p-4 md:p-6">
+                        <div className="flex p-1 bg-slate-200/80 rounded-xl mb-8 overflow-x-auto">
+                            <button onClick={() => setActiveTab('overview')} className={`flex-1 min-w-[100px] py-2 px-3 text-xs md:text-sm font-bold rounded-lg transition-all whitespace-nowrap ${activeTab === 'overview' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-black/5' : 'text-slate-500 hover:text-slate-700'}`}>Overview</button>
+                            {confinedModules.length > 0 && <button onClick={() => setActiveTab('confined')} className={`flex-1 min-w-[100px] py-2 px-3 text-xs md:text-sm font-bold rounded-lg transition-all whitespace-nowrap ${activeTab === 'confined' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-black/5' : 'text-slate-500 hover:text-slate-700'}`}>Confined ({confinedModules.length})</button>}
+                            {openWaterModules.length > 0 && <button onClick={() => setActiveTab('open_water')} className={`flex-1 min-w-[100px] py-2 px-3 text-xs md:text-sm font-bold rounded-lg transition-all whitespace-nowrap ${activeTab === 'open_water' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-black/5' : 'text-slate-500 hover:text-slate-700'}`}>Open Water ({openWaterModules.length})</button>}
+                            {knowledgeModules.length > 0 && <button onClick={() => setActiveTab('knowledge')} className={`flex-1 min-w-[100px] py-2 px-3 text-xs md:text-sm font-bold rounded-lg transition-all whitespace-nowrap ${activeTab === 'knowledge' ? 'bg-white text-slate-900 shadow-sm ring-1 ring-black/5' : 'text-slate-500 hover:text-slate-700'}`}>Theory ({knowledgeModules.length})</button>}
+                        </div>
+
+                        <div className="min-h-[40vh]">
+                            {activeTab === 'overview' && (
+                                <div className="space-y-6 animate-in fade-in zoom-in-95 duration-200">
+                                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                                        <h3 className="text-sm uppercase tracking-wider font-bold text-slate-400 mb-4 flex items-center gap-2">Prerequisites</h3>
+                                        <ul className="space-y-3">
+                                            {course.prereqs.map((req, i) => (
+                                                <li key={i} className="flex items-start gap-3 text-slate-700 font-medium">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0" />
+                                                    {req}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                                        <h3 className="text-sm uppercase tracking-wider font-bold text-slate-400 mb-4 flex items-center gap-2"><IconTank className="w-4 h-4" /> Required Equipment</h3>
+                                        <div className="flex flex-wrap gap-2">
+                                            {course.requiredEquipment.length > 0 ? (
+                                                course.requiredEquipment.map((item, i) => (
+                                                    <span key={i} className="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-lg text-sm font-medium border border-slate-200 capitalize">{item.replace(/_/g, ' ')}</span>
+                                                ))
+                                            ) : (
+                                                <span className="text-slate-400 italic">Standard Scuba Equipment</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                            {activeTab === 'confined' && <div className="animate-in fade-in slide-in-from-right-4 duration-200">{confinedModules.map(renderModuleCard)}</div>}
+                            {activeTab === 'open_water' && <div className="animate-in fade-in slide-in-from-right-4 duration-200">{openWaterModules.map(renderModuleCard)}</div>}
+                            {activeTab === 'knowledge' && <div className="animate-in fade-in slide-in-from-right-4 duration-200">{knowledgeModules.map(renderModuleCard)}</div>}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- APP COMPONENT ---
+        const renderIcon = (iconName, className) => {
+            switch(iconName) {
+                case 'scuba': return <IconScuba className={className} />;
+                case 'compass': return <IconCompass className={className} />;
+                case 'lifebuoy': return <IconLifebuoy className={className} />;
+                case 'badge': return <IconBadge className={className} />;
+                case 'mask': return <IconMask className={className} />;
+                case 'refresh': return <IconRefresh className={className} />;
+                case 'star': return <IconStar className={className} />;
+                case 'smile': return <IconSmile className={className} />;
+                case 'seal': return <IconSeal className={className} />;
+                case 'fins': return <IconFins className={className} />;
+                default: return <IconScuba className={className} />;
+            }
+        };
+
+        const CourseCard = ({ course, onSelect }) => (
+            <button onClick={() => onSelect(course.id)} className="group relative bg-white rounded-xl p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-left border border-slate-200 overflow-hidden h-full flex flex-col">
+                <div className={`absolute -right-4 -top-4 p-4 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500`}>
+                    {renderIcon(course.icon, `w-32 h-32 text-${course.color}-600`)}
+                </div>
+                <div className="relative z-10 flex-1">
+                    <div className="flex justify-between items-start mb-3">
+                        <span className={`inline-block px-2.5 py-1 rounded-md text-[10px] uppercase font-extrabold tracking-wide bg-${course.color}-50 text-${course.color}-700`}>{course.shortTitle}</span>
+                        {renderIcon(course.icon, `w-6 h-6 text-${course.color}-500 opacity-80`)}
+                    </div>
+                    <h2 className="text-xl font-bold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors pr-8">{course.title}</h2>
+                    <div className="mt-4 pt-4 border-t border-slate-100 grid grid-cols-2 gap-y-2 text-xs text-slate-500">
+                        <div><span className="block font-bold text-slate-700 mb-0.5">Min Age</span>{course.minAge}</div>
+                        <div><span className="block font-bold text-slate-700 mb-0.5">Max Depth</span>{course.maxDepth.split(' ')[0]}</div>
+                    </div>
+                </div>
+            </button>
+        );
+
+        const App = () => {
+            const [selectedCourseId, setSelectedCourseId] = React.useState(null);
+            const selectedCourse = COURSES.find(c => c.id === selectedCourseId);
+
+            if (selectedCourse) {
+                return <CourseDetail course={selectedCourse} onBack={() => setSelectedCourseId(null)} />;
+            }
+
+            return (
+                <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pb-20">
+                    <div className="bg-slate-900 text-white pb-24 pt-16 px-6 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-[128px] opacity-20 -translate-y-1/2 translate-x-1/2"></div>
+                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500 rounded-full blur-[128px] opacity-20 translate-y-1/2 -translate-x-1/2"></div>
+                        <div className="max-w-5xl mx-auto relative z-10">
+                            <div className="flex items-center gap-3 mb-4">
+                                <span className="px-3 py-1 bg-blue-500/20 border border-blue-400/30 rounded-full text-blue-200 text-xs font-bold uppercase tracking-wider">Instructor Tool</span>
+                            </div>
+                            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Master Guide</h1>
+                            <p className="text-slate-300 text-lg max-w-xl leading-relaxed">Interactive, digital reference for PADI Standards, ratios, and skills. Designed for quick access on the go.</p>
+                        </div>
+                    </div>
+
+                    <div className="max-w-5xl mx-auto px-4 md:px-6 -mt-12 relative z-20 space-y-10">
+                        <section>
+                            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 ml-1 flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-teal-500"></span> Experience Programs</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {COURSES.filter(c => c.category === 'program').map(course => <CourseCard key={course.id} course={course} onSelect={setSelectedCourseId} />)}
+                            </div>
+                        </section>
+                        <section>
+                            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 ml-1 flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-blue-600"></span> Core Certifications</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {COURSES.filter(c => c.category === 'core').map(course => <CourseCard key={course.id} course={course} onSelect={setSelectedCourseId} />)}
+                            </div>
+                        </section>
+                        <section>
+                            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 ml-1 flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-black"></span> Professional</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {COURSES.filter(c => c.category === 'pro').map(course => <CourseCard key={course.id} course={course} onSelect={setSelectedCourseId} />)}
+                            </div>
+                        </section>
+                        <section>
+                            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 ml-1 flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-purple-500"></span> Specialties</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {COURSES.filter(c => c.category === 'specialty').map(course => <CourseCard key={course.id} course={course} onSelect={setSelectedCourseId} />)}
+                            </div>
+                        </section>
+                        <div className="mt-12 text-center text-slate-400 text-xs pb-8 border-t border-slate-200 pt-8">
+                            <p className="mb-2"><strong>Disclaimer:</strong> This tool is a reference guide only.</p>
+                            <p>Always verify standards with the latest official PADI Instructor Manual and Training Bulletins.</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
