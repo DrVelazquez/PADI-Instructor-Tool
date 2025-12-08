@@ -8,7 +8,7 @@
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -55,6 +55,15 @@
       .no-scrollbar::-webkit-scrollbar { display: none; }
       .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/"
+  }
+}
+</script>
 </head>
 <body class="bg-slate-50 text-slate-900">
     <div id="root"></div>
@@ -162,9 +171,10 @@
                 id: 'bubble_cw',
                 title: 'Confined Water',
                 type: 'confined',
+                depth: 'Start in stand-up depth',
                 skills: [
                   { id: 'bb_1', name: 'Briefing: equipment, clearing, breathing rules' },
-                  { id: 'bb_2', name: 'Practice breathing in shallow water' },
+                  { id: 'bb_2', name: 'Practice breathing in stand-up depth' },
                   { id: 'bb_3', name: 'Clear regulator & mask' },
                   { id: 'bb_4', name: 'Equalization techniques' },
                   { id: 'bb_5', name: 'Inflate/Deflate BCD at surface' },
@@ -271,7 +281,7 @@
                 id: 'dsd_cw',
                 title: 'Confined Water (Mandatory)',
                 type: 'confined',
-                depth: 'Shallow water first, then max 6m',
+                depth: 'Start in stand-up depth, then max 6m',
                 skills: [
                   { id: 'dsd_1', name: 'Breathing underwater' },
                   { id: 'dsd_2', name: 'Regulator clearing' },
@@ -280,7 +290,7 @@
                   { id: 'dsd_5', name: 'Equalization techniques' },
                   { id: 'dsd_6', name: 'Inflate/Deflate BCD at surface (Pool only required)' },
                 ],
-                notes: ['Instructor MUST conduct the CW session if OW dive is planned.', 'Divemaster (DSD Leader) can conduct Pool/Confined only if no OW planned.', 'DSD Leader cannot conduct DSD in Open Water.']
+                notes: ['Instructor MUST conduct the CW session if OW dive is planned.', 'Divemaster (DSD Leader) can conduct Pool only.']
               },
               {
                 id: 'dsd_ow',
@@ -289,7 +299,7 @@
                 depth: 'Max 12m / 40ft',
                 prerequisites: ['dsd_cw'],
                 skills: [
-                  { id: 'dsd_ow_1', name: 'Practice skills in shallow water if not done in pool' },
+                  { id: 'dsd_ow_1', name: 'Practice skills in stand-up depth if not done in pool' },
                   { id: 'dsd_ow_2', name: 'Guided tour of dive site' },
                 ],
                 notes: ['Must be directly supervised by an Instructor.', 'Valid for 14 days for subsequent dives.']
@@ -593,13 +603,9 @@
                 type: 'open_water',
                 skills: [
                   { id: 'ppb_1', name: 'Determine proper weighting' },
-                  { id: 'ppb_2', name: 'Streamline equipment' },
-                  { id: 'ppb_3', name: 'Adjust Trim' },
-                  { id: 'ppb_4', name: 'Controlled descent (neutral buoyancy)' },
-                  { id: 'ppb_5', name: 'Hover (1 min) w/o hand/fin movement' },
-                  { id: 'ppb_6', name: 'Swim horizontally neutral' },
-                  { id: 'ppb_7', name: 'Adjust weights/trim' },
-                  { id: 'ppb_8', name: 'Post-dive buoyancy check' },
+                  { id: 'ppb_2', name: 'Descend & establish neutral buoyancy' },
+                  { id: 'ppb_3', name: 'Hover (1 min) w/o hand/fin movement' },
+                  { id: 'ppb_4', name: 'Swim horizontally neutral' },
                 ]
               },
               {
@@ -669,7 +675,7 @@
             color: 'slate',
             icon: 'lifebuoy',
             minAge: 12,
-            maxDepth: '12m (Ex 4) | 9m (Ex 6 & Scen 1)',
+            maxDepth: '9m / 30ft (Ex 6 & Scenario 1)',
             ratios: {
               open: '8:1',
             },
@@ -680,6 +686,7 @@
                 id: 'res_self',
                 title: 'Self-Rescue Review',
                 type: 'confined',
+                depth: 'Surface',
                 skills: [
                   { id: 'sr_1', name: 'Cramp release' },
                   { id: 'sr_2', name: 'Surface buoyancy' },
@@ -692,6 +699,7 @@
                 id: 'res_ex_1',
                 title: 'Ex 1: Tired Diver',
                 type: 'open_water',
+                depth: 'Surface',
                 skills: [
                   { id: 'r1_1', name: 'Approach & Evaluate' },
                   { id: 'r1_2', name: 'Contact & Reassure' },
@@ -703,6 +711,7 @@
                 id: 'res_ex_2',
                 title: 'Ex 2: Panicked Diver',
                 type: 'open_water',
+                depth: 'Surface',
                 skills: [
                   { id: 'r2_1', name: 'Approach & Evaluate' },
                   { id: 'r2_2', name: 'Contact (surface)' },
@@ -714,6 +723,7 @@
                 id: 'res_ex_3',
                 title: 'Ex 3: Response from Shore/Boat',
                 type: 'open_water',
+                depth: 'Surface',
                 skills: [
                   { id: 'r3_1', name: 'Non-swimming assists (reach/throw)' },
                   { id: 'r3_2', name: 'Water entry with view of victim' },
@@ -735,6 +745,7 @@
                 id: 'res_ex_5',
                 title: 'Ex 5: Missing Diver',
                 type: 'open_water',
+                depth: 'Open Water',
                 skills: [
                   { id: 'r5_1', name: 'Underwater search pattern' },
                 ]
@@ -753,6 +764,7 @@
                 id: 'res_ex_7',
                 title: 'Ex 7: Unconscious Diver at Surface',
                 type: 'open_water',
+                depth: 'Surface',
                 skills: [
                   { id: 'r7_0', name: 'Establish positive buoyancy' },
                   { id: 'r7_1', name: 'Approach & Turn face up' },
@@ -768,6 +780,7 @@
                 id: 'res_ex_8',
                 title: 'Ex 8: Exiting Unconscious Diver',
                 type: 'open_water',
+                depth: 'Surface/Exit',
                 skills: [
                   { id: 'r8_1', name: 'Exit with breathing victim' },
                   { id: 'r8_2', name: 'Exit with non-breathing victim' },
@@ -777,6 +790,7 @@
                 id: 'res_ex_9',
                 title: 'Ex 9: First Aid / Oxygen',
                 type: 'open_water',
+                depth: 'Dry / Surface',
                 skills: [
                   { id: 'r9_1', name: 'Administer O2 to breathing patient' },
                   { id: 'r9_2', name: 'Administer O2 to non-breathing patient (mask)' },
@@ -786,6 +800,7 @@
                 id: 'res_ex_10',
                 title: 'Ex 10: Response from Shore/Boat (Unconscious)',
                 type: 'open_water',
+                depth: 'Surface',
                 skills: [
                   { id: 'r10_1', name: 'Respond to non-breathing victim' },
                   { id: 'r10_2', name: 'Rescue breathing in water' },
