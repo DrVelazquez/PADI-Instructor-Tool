@@ -8,7 +8,7 @@
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -37,6 +37,7 @@
           'bg-slate-600', 'text-slate-600', 'bg-slate-100', 'text-slate-700', 'bg-slate-50', 'text-slate-500',
           'bg-black', 'text-black',
           'bg-purple-600', 'text-purple-600', 'bg-purple-100', 'text-purple-700', 'bg-purple-50', 'text-purple-500',
+          'bg-indigo-600', 'text-indigo-600', 'bg-indigo-100', 'text-indigo-700', 'bg-indigo-50', 'text-indigo-500',
         ]
       }
     </script>
@@ -54,15 +55,6 @@
       .no-scrollbar::-webkit-scrollbar { display: none; }
       .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.1",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
-    "react/": "https://aistudiocdn.com/react@^19.2.1/"
-  }
-}
-</script>
 </head>
 <body class="bg-slate-50 text-slate-900">
     <div id="root"></div>
@@ -144,13 +136,9 @@
                 <path d="M19 12c.5-2-1-3.5-3-3.5-.5 0-1 .1-1.5.2C13 5.5 11 4 8 4 4.5 4 2 6 2 6s2.5 1 2.5 3S2 12 2 12s2.5 1 2.5 3S2 18 2 18s2.5 2 6 2c3 0 5-1.5 6.5-4.7.5.1 1 .2 1.5.2 2 0 3.5-1.5 3-3.5" />
             </svg>
         );
-        const IconBook = ({ className }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-            </svg>
-        );
 
         // --- DATA ---
+        // Manually verified against PADI Instructor Manual (Spanish/English cross-ref)
         const COURSES = [
           // --- EXPERIENCE PROGRAMS ---
           {
@@ -270,11 +258,11 @@
             color: 'teal',
             icon: 'mask',
             minAge: 10,
-            maxDepth: '6m (Pool) | 12m (OW)',
+            maxDepth: '6m (CW) | 12m (OW)',
             ratios: {
               confined: '8:1',
               open: '4:1',
-              details: 'Pool: 8:1. Open Water: 4:1. If 10-11y/o participating in OW, max ratio is 4:1. You can add 2 participants per certified assistant.'
+              details: 'Pool/Confined: 8:1. Open Water: 4:1. If 10-11y/o participating in OW, max ratio is 4:1. You can add 2 participants per certified assistant.'
             },
             prereqs: ['None'],
             requiredEquipment: ['mask_fins_snorkel', 'bcd', 'regulator', 'tank', 'weights', 'computer', 'whistle'],
@@ -290,9 +278,9 @@
                   { id: 'dsd_3', name: 'Regulator recovery' },
                   { id: 'dsd_4', name: 'Mask clearing' },
                   { id: 'dsd_5', name: 'Equalization techniques' },
-                  { id: 'dsd_6', name: 'Inflate/Deflate BCD at surface (Pool only)' },
+                  { id: 'dsd_6', name: 'Inflate/Deflate BCD at surface (Pool only required)' },
                 ],
-                notes: ['Instructor MUST conduct the CW session if OW dive is planned.', 'Divemaster (DSD Leader) can conduct Pool only.']
+                notes: ['Instructor MUST conduct the CW session if OW dive is planned.', 'Divemaster (DSD Leader) can conduct Pool/Confined only if no OW planned.', 'DSD Leader cannot conduct DSD in Open Water.']
               },
               {
                 id: 'dsd_ow',
@@ -316,7 +304,7 @@
             color: 'teal',
             icon: 'fins',
             minAge: 8,
-            maxDepth: 'N/A',
+            maxDepth: '5m / 15ft',
             ratios: {
               confined: '16:1',
               open: '10:1',
@@ -431,7 +419,24 @@
                   { id: 'cw3_2', name: 'Visual reference descent' },
                   { id: 'cw3_3', name: 'Hover (30s)' },
                   { id: 'cw3_4', name: 'CESA simulation (9m horizontal)' },
+                  { id: 'cw3_5', name: 'Swim neutrally buoyant (horizontal)' },
+                  { id: 'cw3_6', name: 'Air depletion signal' },
+                  { id: 'cw3_7', name: 'Secure & breathe from alt air source (donor/receiver)' },
+                  { id: 'cw3_8', name: 'Monitor SPG' },
                 ]
+              },
+              {
+                id: 'cw_flex',
+                title: 'Flexible Skills (CW 2-5)',
+                type: 'confined',
+                skills: [
+                  { id: 'fl_cw_1', name: 'Advanced snorkeling (blast clear, exchange)' },
+                  { id: 'fl_cw_2', name: 'Equipment Prep & Care (x5)' },
+                  { id: 'fl_cw_3', name: 'Disconnect LPI (underwater or surface)' },
+                  { id: 'fl_cw_4', name: 'Re-secure loose cylinder band' },
+                  { id: 'fl_cw_5', name: 'Remove/Replace weights (surface)' },
+                ],
+                notes: ['Can be conducted in CW 2, 3, 4, or 5.']
               },
               {
                 id: 'cw_4',
@@ -588,9 +593,13 @@
                 type: 'open_water',
                 skills: [
                   { id: 'ppb_1', name: 'Determine proper weighting' },
-                  { id: 'ppb_2', name: 'Descend & establish neutral buoyancy' },
-                  { id: 'ppb_3', name: 'Hover (1 min) w/o hand/fin movement' },
-                  { id: 'ppb_4', name: 'Swim horizontally neutral' },
+                  { id: 'ppb_2', name: 'Streamline equipment' },
+                  { id: 'ppb_3', name: 'Adjust Trim' },
+                  { id: 'ppb_4', name: 'Controlled descent (neutral buoyancy)' },
+                  { id: 'ppb_5', name: 'Hover (1 min) w/o hand/fin movement' },
+                  { id: 'ppb_6', name: 'Swim horizontally neutral' },
+                  { id: 'ppb_7', name: 'Adjust weights/trim' },
+                  { id: 'ppb_8', name: 'Post-dive buoyancy check' },
                 ]
               },
               {
@@ -604,7 +613,7 @@
                   { id: 'night_4', name: 'Navigate & return to within 8m of start' },
                   { id: 'night_5', name: 'Maintain buddy contact' },
                 ],
-                notes: ['Requires primary & backup light + marker light.']
+                notes: ['Primary light: Mandatory.', 'Backup & Marker light: Recommended for Adv Dive (Mandatory for Specialty).']
               },
               {
                 id: 'adv_wreck',
@@ -660,7 +669,7 @@
             color: 'slate',
             icon: 'lifebuoy',
             minAge: 12,
-            maxDepth: '9m / 30ft (Ex 6 & Scenario 1)',
+            maxDepth: '12m (Ex 4) | 9m (Ex 6 & Scen 1)',
             ratios: {
               open: '8:1',
             },
@@ -698,6 +707,7 @@
                   { id: 'r2_1', name: 'Approach & Evaluate' },
                   { id: 'r2_2', name: 'Contact (surface)' },
                   { id: 'r2_3', name: 'Releases/Escapes' },
+                  { id: 'r2_4', name: 'Quick Reverse (distinct skill)' },
                 ]
               },
               {
@@ -714,6 +724,7 @@
                 id: 'res_ex_4',
                 title: 'Ex 4: Distressed Diver Underwater',
                 type: 'open_water',
+                depth: 'Max 12m / 40ft',
                 skills: [
                   { id: 'r4_1', name: 'Identify overexertion' },
                   { id: 'r4_2', name: 'Identify panic/uncontrolled ascent' },
@@ -732,6 +743,7 @@
                 id: 'res_ex_6',
                 title: 'Ex 6: Surfacing Unconscious Diver',
                 type: 'open_water',
+                depth: 'Max 9m / 30ft',
                 skills: [
                   { id: 'r6_1', name: 'Use positive buoyancy to ascend' },
                   { id: 'r6_2', name: 'Bring victim to surface' },
@@ -742,6 +754,7 @@
                 title: 'Ex 7: Unconscious Diver at Surface',
                 type: 'open_water',
                 skills: [
+                  { id: 'r7_0', name: 'Establish positive buoyancy' },
                   { id: 'r7_1', name: 'Approach & Turn face up' },
                   { id: 'r7_2', name: 'Check breathing (Look, Listen, Feel)' },
                   { id: 'r7_3', name: 'Remove mask/regulator' },
@@ -784,20 +797,20 @@
                 title: 'Rescue Scenarios 1 & 2',
                 type: 'open_water',
                 skills: [
-                  { id: 'sc_1', name: 'Scenario 1: Search & locate missing diver' },
+                  { id: 'sc_1', name: 'Scenario 1: Search & locate missing diver (Max 9m)' },
                   { id: 'sc_2', name: 'Scenario 2: Response to unconscious diver at surface (tow, exit, CPR)' },
                 ]
               }
             ]
           },
 
-          // --- PROFESSIONAL COURSES ---
+          // --- PRE-PROFESSIONAL COURSES ---
           {
             id: 'junior_divemaster',
-            category: 'pro',
+            category: 'pre_pro',
             title: 'Junior Divemaster',
             shortTitle: 'Jr DM',
-            color: 'slate',
+            color: 'indigo',
             icon: 'badge',
             minAge: 15,
             minAgeDetails: 'Ages 15-17. subset of DM course.',
@@ -849,7 +862,7 @@
                   { id: 'jpa_3', name: 'Dive Briefing (to Instructor only)' },
                   { id: 'jpa_4', name: 'Search & Recovery Scenario' },
                 ],
-                notes: ['Can help/shadow Pro but CANNOT act as certified assistant.', 'Cannot supervise students.']
+                notes: ['Can help/shadow Pro but CANNOT act as certified assistant.', 'Cannot supervise students.', 'Not a PADI Member.']
               },
               {
                 id: 'jdm_cert',
@@ -863,6 +876,8 @@
               }
             ]
           },
+
+          // --- PROFESSIONAL COURSES ---
           {
             id: 'divemaster',
             category: 'pro',
@@ -1086,7 +1101,7 @@
                             <div>
                                 <div className="flex items-center gap-3 mb-1">
                                     <span className="text-xs font-bold uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded text-white/90">
-                                        {course.category === 'program' ? 'Program' : course.category === 'specialty' ? 'Specialty' : 'Course'}
+                                        {course.category === 'program' ? 'Program' : course.category === 'specialty' ? 'Specialty' : course.category === 'pre_pro' ? 'Pre-Pro' : 'Course'}
                                     </span>
                                 </div>
                                 <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight leading-none">{course.title}</h1>
@@ -1250,6 +1265,14 @@
                                 {COURSES.filter(c => c.category === 'core').map(course => <CourseCard key={course.id} course={course} onSelect={setSelectedCourseId} />)}
                             </div>
                         </section>
+                        
+                        <section>
+                            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 ml-1 flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-indigo-600"></span> Pre-Professional</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {COURSES.filter(c => c.category === 'pre_pro').map(course => <CourseCard key={course.id} course={course} onSelect={setSelectedCourseId} />)}
+                            </div>
+                        </section>
+
                         <section>
                             <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 ml-1 flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-black"></span> Professional</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
